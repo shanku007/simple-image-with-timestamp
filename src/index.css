@@ -1,4 +1,17 @@
-.cdx-simple-image {}
+.cdx-simple-image {
+  display: flex;
+  flex-direction: column;
+}
+.cdx-simple-image-time-stamp-wrapper{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.cdx-simple-image__timestamp-holder{
+  width: 10%;
+  margin: 0.1rem 0.2rem;
+}
 
 .cdx-simple-image .cdx-loader {
   min-height: 200px;

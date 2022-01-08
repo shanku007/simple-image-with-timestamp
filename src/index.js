@@ -53,6 +53,8 @@ class SimpleImage {
        * Tool's classes
        */
       wrapper: 'cdx-simple-image',
+      imageTimeStampWrapper: 'cdx-simple-image-time-stamp-wrapper',
+      timestampHolder: 'cdx-simple-image__timestamp-holder',
       imageHolder: 'cdx-simple-image__picture',
       caption: 'cdx-simple-image__caption'
     };
@@ -62,6 +64,8 @@ class SimpleImage {
      */
     this.nodes = {
       wrapper: null,
+      imageTimeStampWrapper: null,
+      timestampHolder: null,
       imageHolder: null,
       image: null,
       caption: null
@@ -73,10 +77,14 @@ class SimpleImage {
     this.data = {
       url: data.url || '',
       caption: data.caption || '',
+      timeStamp: data.timeStamp || null,
+      playFromTimeStamp: data.playFromTimeStamp || null,
       withBorder: data.withBorder !== undefined ? data.withBorder : false,
       withBackground: data.withBackground !== undefined ? data.withBackground : false,
       stretched: data.stretched !== undefined ? data.stretched : false,
     };
+
+    this.config = config || {}
  
     /**
      * Available Image settings
@@ -118,14 +126,22 @@ class SimpleImage {
         type: 'file'
       }),
       loader = this._make('div', this.CSS.loading),
+      imageTimeStampWrapper = this._make('div', this.CSS.imageTimeStampWrapper),
       imageHolder = this._make('div', this.CSS.imageHolder),
+      playFromTimeStamp = this._make('div', [this.CSS.timestampHolder], {
+        innerHTML: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><defs><style>.cls-1{fill:#201602}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="layer_1-2" data-name="layer 1"><path class="cls-1" d="M24 48a24 24 0 1 1 24-24 24 24 0 0 1-24 24zm0-46a22 22 0 1 0 22 22A22 22 0 0 0 24 2z"/><path class="cls-1" d="M18 37a1 1 0 0 1-.46-.11A1 1 0 0 1 17 36V12a1 1 0 0 1 .54-.89 1 1 0 0 1 1 .07l17 12a1 1 0 0 1 0 1.64l-17 12A1 1 0 0 1 18 37zm1-23.07v20.14L33.27 24z"/></g></g></svg>'
+      }),
+
       image = this._make('img'),
       caption = this._make('div', [this.CSS.input, this.CSS.caption], {
         contentEditable: 'true',
         innerHTML: this.data.caption || ''
       });
 
+
+
     this.nodes.imageHolder = imageHolder;
+    this.nodes.imageTimeStampWrapper = imageTimeStampWrapper;
     this.nodes.wrapper = wrapper;
     this.nodes.image = image;
     this.nodes.caption = caption;
@@ -136,8 +152,13 @@ class SimpleImage {
 
     image.onload = () => {
       wrapper.classList.remove(this.CSS.loading);
+      wrapper.appendChild(imageTimeStampWrapper);
+      if (this.data.timeStamp) {
+        playFromTimeStamp.addEventListener('click', () => {this.config.onPlayClick(this.data.timeStamp)});
+        imageTimeStampWrapper.appendChild(playFromTimeStamp);
+      }
+      imageTimeStampWrapper.appendChild(imageHolder)
       imageHolder.appendChild(image);
-      wrapper.appendChild(imageHolder);
       wrapper.appendChild(caption);
       loader.remove();
 
@@ -194,7 +215,8 @@ class SimpleImage {
 
     return Object.assign(this.data, {
       url: image.src,
-      caption: caption.innerHTML
+      caption: caption.innerHTML,
+      timeStamp: this.data.timeStamp
     });
   }
 
