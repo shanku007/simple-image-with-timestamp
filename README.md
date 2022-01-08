@@ -1,6 +1,8 @@
 Note: This is a fork of the SimpleImage repository. It adds in extra functionality such as a toolbar to add images (rather than just drag and drop) and uses blob URL's
 to improve memory usage.
 
+This can also be used to display a timestamped image and a play button to play from that timestamp.
+
 # Simple Image Tool
 
 Provides Image Blocks for the [Editor.js](https://editorjs.io).
@@ -32,9 +34,9 @@ const SimpleImage = require('simple-image-editorjs');
 
 ### Load from CDN
 
-You can load specific version of package from [jsDelivr CDN](https://www.jsdelivr.com/package/npm/simple-image-editorjs).
+You can load specific version of package from [jsDelivr CDN](https://cdn.jsdelivr.net/gh/shanku007/simple-image-with-timestamp/dist/bundle.min.js).
 
-`https://cdn.jsdelivr.net/npm/simple-image-editorjs@latest`
+`https://cdn.jsdelivr.net/gh/shanku007/simple-image-with-timestamp/dist/bundle.min.js`
 
 Then require this script on page with Editor.js.
 
@@ -53,6 +55,11 @@ var editor = EditorJS({
   tools: {
     ...
     image: SimpleImage,
+    config: {
+            onPlayClick: (timeStamp) => { //The function to handle play button click
+              console.log(timeStamp);
+            },
+          }
   }
   
   ...
@@ -61,7 +68,7 @@ var editor = EditorJS({
 
 ## Config Params
 
-This Tool has no config params
+1. onPlayClick
 
 ## Tool's settings
 
@@ -82,6 +89,7 @@ This Tool has no config params
 | withBorder     | `boolean` | add border to image             |
 | withBackground | `boolean` | need to add background          |
 | stretched      | `boolean` | stretch image to screen's width |
+| timeStamp      | `string`  | The timestamp for the image     |
 
 
 ```json
@@ -92,7 +100,8 @@ This Tool has no config params
         "caption" : "Roadster // tesla.com",
         "withBorder" : false,
         "withBackground" : false,
-        "stretched" : true
+        "stretched" : true,
+        "timeStamp": "164"
     }
 }
 ```
