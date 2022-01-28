@@ -1,6 +1,6 @@
 {
-  "name": "simple-image-editorjs",
-  "version": "1.4.0",
+  "name": "image-with-timestamp",
+  "version": "1.4.1",
   "keywords": [
     "codex editor",
     "tool",
@@ -9,7 +9,7 @@
     "editor.js",
     "editorjs"
   ],
-  "description": "SimpleImage Tool for Editor.js",
+  "description": "SimpleImage Tool for Editor.js with timestamp and caption. The user can also upload a image",
   "license": "MIT",
   "repository": "https://github.com/shanku007/simple-image-with-timestamp",
   "main": "./dist/bundle.js",
@@ -19,7 +19,7 @@
   },
   "author": {
     "name": "Shankar Jha",
-    "email": "jhashankar0077@gmail.com"
+    "email": "the.shankar.jha@gmail.com"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
